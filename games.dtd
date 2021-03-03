@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+        <!ELEMENT games ANY>
+        <!ELEMENT game (type, board-size, moves, winner)>
+        <!ELEMENT type (#PCDATA)>
+        <!ELEMENT board-size (#PCDATA)>
+        <!ELEMENT moves (#PCDATA)>
+        <!ELEMENT winner (#PCDATA)>

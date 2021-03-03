@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE games SYSTEM "games.dtd">
+<games>
+    <game>
+        <type>PC Easy</type>
+        <board-size>7x6</board-size>
+        <moves>16</moves>
+        <winner>Computer</winner>
+    </game>
+    <game>
+        <type>PC Easy</type>
+        <board-size>7x6</board-size>
+        <moves>16</moves>
+        <winner>Computer</winner>
+    </game>
+    <game>
+        <type>PC Easy</type>
+        <board-size>7x6</board-size>
+        <moves>11</moves>
+        <winner>Player 1</winner>
+    </game>
+</games>
