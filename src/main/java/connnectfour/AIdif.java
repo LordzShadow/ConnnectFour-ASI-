@@ -49,7 +49,7 @@ public class AIdif extends Application {
         easy_btn.setFont(buttonFont);
         easy_btn.setOnAction(e -> {
             Single single = new Single();
-            single.difficulty = 1;
+            single.difficulty = 2;
             single.start(primaryStage);
             //primaryStage.setTitle("ConnnectFour -> Singleplayer -> Easy");
             //primaryStage.setScene(Main.s);
@@ -61,7 +61,7 @@ public class AIdif extends Application {
         medium_btn.setFont(buttonFont);
         medium_btn.setOnAction(e -> {
             Single single = new Single();
-            single.difficulty = 3;
+            single.difficulty = 4;
             single.start(primaryStage);
             //primaryStage.setTitle("ConnnectFour -> Singleplayer -> Medium");
             //primaryStage.setScene(Main.s);
@@ -73,7 +73,7 @@ public class AIdif extends Application {
         hard_btn.setFont(buttonFont);
         hard_btn.setOnAction(e -> {
             Single single = new Single();
-            single.difficulty = 6;
+            single.difficulty = 7;
             single.start(primaryStage);
             //primaryStage.setTitle("ConnnectFour -> Singleplayer -> Hard");
             //primaryStage.setScene(Main.s);

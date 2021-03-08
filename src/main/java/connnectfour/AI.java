@@ -1,11 +1,13 @@
 package connnectfour;
 
+import java.util.Arrays;
+
 public class AI {
     static int cols;
     static int rows;
-    static int center = 4;
-    static int linetwo = 2;
-    static int linethree = 5;
+    static int center = 3;
+    static int linetwo = 4;
+    static int linethree = 6;
 
 
     static class Move {
@@ -15,6 +17,125 @@ public class AI {
     public AI(int colss, int rowss) {
         cols = colss;
         rows = rowss;
+    }
+    public static void printBoard(int[][] board) {
+        for (int i = 0; i < board.length; i++) {
+            System.out.println(Arrays.toString(board[i]));
+        }
+    }
+
+    public static boolean getsInRow(int x, int y, int n, int[][] board, int l) {
+        int maxX = Math.min(x+1, board[0].length - n + 1);
+        int minX = Math.max(0, x-n+1);
+        int minY = Math.max(0, y-n+1);
+        int maxY = Math.min(y+1, board.length - n + 1);
+
+        for(int j = minX; j < maxX; j++){
+            boolean praeguneCheck = true;
+            int nullid = 0;
+            for (int k = 0; k < n; k++) {
+                int value = board[y][j + k];
+                if (value != l && value != 0) {
+                    praeguneCheck = false;
+                    break;
+                }
+                if (value == 0) {
+                    nullid++;
+                    if (k == 0 || k == n-1) {
+                        praeguneCheck = false;
+                        break;
+                    }
+                }
+            }
+            if (nullid >= n-1) {
+                praeguneCheck = false;
+            }
+            if(praeguneCheck){
+                return true;
+            }
+        }
+        for(int i = minY; i < maxY; i++){
+            boolean praeguneCheck = true;
+            int nullid = 0;
+            for (int k = 0; k < n; k++) {
+                int value = board[i + k][x];
+                if (value != l && value != 0) {
+                    praeguneCheck = false;
+                    break;
+                }
+                if (value == 0) {
+                    nullid++;
+                    if (k == 0 || k == n-1) {
+                        praeguneCheck = false;
+                        break;
+                    }
+                }
+            }
+            if (nullid >= n-1) {
+                praeguneCheck = false;
+            }
+            if(praeguneCheck){
+                return true;
+            }
+        }
+        for (int i = n-1; i >= 0; i--) {
+            boolean praeguneCheck = true;
+            int nullid = 0;
+            for (int k = 0; k < n; k++) {
+                if (y+k-i >= board.length || x+k-i >= board[0].length || y+k-i < 0 || x+k-i < 0) {
+                    praeguneCheck = false;
+                    break;
+                }
+                int value = board[y + k - i][x + k - i];
+                if (value != l && value != 0) {
+                    praeguneCheck = false;
+                    break;
+                }
+                if (value == 0) {
+                    nullid++;
+                    if (k == 0 || k == n-1) {
+                        praeguneCheck = false;
+                        break;
+                    }
+                }
+            }
+            if (nullid >= n-1) {
+                praeguneCheck = false;
+            }
+            if(praeguneCheck){
+                return true;
+            }
+        }
+
+        for (int i = n-1; i >= 0; i--) {
+            boolean praeguneCheck = true;
+            int nullid = 0;
+            for (int k = 0; k < n; k++) {
+                if (y-k+i < 0 || y-k+i >= board.length || x+k-i < 0 || x+k-i >= board[0].length) {
+                    praeguneCheck = false;
+                    break;
+                }
+                int value = board[y - k + i][x + k - i];
+                if (value != l && value != 0) {
+                    praeguneCheck = false;
+                    break;
+                }
+                if (value == 0) {
+                    nullid++;
+                    if (k == 0 || k == n-1) {
+                        praeguneCheck = false;
+                        break;
+                    }
+                }
+            }
+            if (nullid >= n-1) {
+                praeguneCheck = false;
+            }
+            if (praeguneCheck) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public static int checkWin(int[][] board){
@@ -102,7 +223,7 @@ public class AI {
         return moves;
     }
 
-    static int minimax(int[][] board, int depth, Boolean isMax, int move) {
+    static int minimax(int[][] board, int depth, Boolean isMax, int move, int y) {
         int winner = checkWin(board);
 
         // If player has won the game
@@ -124,13 +245,19 @@ public class AI {
         if (move == cols/2) {
             this_move += center;
         }
+        int p = isMax ? 1 : 2;
+        if (getsInRow(move, y, 2, board, p)) {
+            this_move += linetwo;
+        }
+        if (getsInRow(move, y, 3, board, p)) {
+            this_move += linethree;
+        }
 
         // If this is maximizer's move
         if (isMax)
         {
-            int player = 2;
             int best = Integer.MIN_VALUE;
-
+            int player = 2;
             // Traverse all cells
             for (int i = 0; i < cols; i++)
             {
@@ -145,7 +272,7 @@ public class AI {
                         // Call minimax recursively and choose
                         // the maximum value
                         best = Math.max(best, minimax(board,
-                                depth - 1, !isMax, i));
+                                depth - 1, !isMax, i, j));
 
                         // Undo the move
                         board[j][i] = 0;
@@ -175,7 +302,7 @@ public class AI {
                         // Call minimax recursively and choose
                         // the minimum value
                         best = Math.min(best, minimax(board,
-                                depth - 1, !isMax, i));
+                                depth - 1, !isMax, i, j));
 
                         // Undo the move
                         board[j][i] = 0;
@@ -207,7 +334,7 @@ public class AI {
 
                     // compute evaluation function for this
                     // move.
-                    int moveVal = minimax(board, depth, false, i);
+                    int moveVal = minimax(board, depth, false, i, j);
                     // Undo the move
                     board[j][i] = 0;
 

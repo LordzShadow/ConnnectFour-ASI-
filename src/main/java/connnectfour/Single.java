@@ -45,9 +45,9 @@ public class Single extends Application {
 
     int difficulty;
     HashMap<Integer, String> diffs = new HashMap<>() {{
-        put(1, "Easy");
-        put(3, "Normal");
-        put(6, "Hard");
+        put(2, "Easy");
+        put(4, "Normal");
+        put(7, "Hard");
     }};
 
     public void start(Stage primaryStage) {
