@@ -13,7 +13,7 @@
 
 ### Klient
 - Jooksutamiseks `gradlew run`
-- Või Realeases alt Windows installer
+- Või [Realeases](https://github.com/LordzShadow/ConnnectFour-ASI-/releases/tag/1.1) alt Windows installer
 
 ### Server
 - Jooksutamiseks tuleb tööle panna `Server.main()`
